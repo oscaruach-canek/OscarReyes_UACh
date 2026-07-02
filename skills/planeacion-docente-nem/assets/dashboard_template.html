@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard de Planeacion Docente NEM</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f0f4f8; color: #2d3748; }
+    header { background: #1a56a4; color: white; padding: 18px 28px; }
+    header h1 { font-size: 1.4rem; }
+    .tabs { display: flex; background: #e2e8f0; border-bottom: 2px solid #cbd5e0; }
+    .tab-btn { padding: 12px 24px; cursor: pointer; border: none; background: transparent; font-size: 0.95rem; color: #4a5568; font-weight: 500; }
+    .tab-btn.active { background: white; color: #1a56a4; border-bottom: 3px solid #1a56a4; }
+    .tab-content { display: none; padding: 24px 28px; }
+    .tab-content.active { display: block; }
+    .card { background: white; border-radius: 8px; padding: 20px; margin-bottom: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    .card h2 { font-size: 1rem; color: #1a56a4; margin-bottom: 12px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .field label { font-size: 0.8rem; color: #718096; font-weight: 600; text-transform: uppercase; }
+    .field p { font-size: 0.95rem; margin-top: 4px; padding: 8px; background: #f7fafc; border-radius: 4px; min-height: 36px; }
+    .momento { border-left: 4px solid #48bb78; padding-left: 14px; margin-bottom: 14px; }
+    .momento.desarrollo { border-color: #4299e1; }
+    .momento.cierre { border-color: #ed8936; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    th { background: #ebf4ff; color: #1a56a4; padding: 10px; text-align: left; }
+    td { padding: 9px 10px; border-bottom: 1px solid #e2e8f0; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.78rem; font-weight: 600; }
+    .badge.logrado { background: #c6f6d5; color: #22543d; }
+    .badge.proceso { background: #fefcbf; color: #744210; }
+    .badge.inicio { background: #fed7d7; color: #742a2a; }
+    .recurso-lista { list-style: none; }
+    .recurso-lista li { padding: 10px 0; border-bottom: 1px solid #e2e8f0; display: flex; align-items: center; gap: 10px; }
+    .tag { background: #ebf4ff; color: #1a56a4; border-radius: 4px; padding: 2px 8px; font-size: 0.78rem; }
+    footer { text-align: center; padding: 16px; color: #a0aec0; font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+<header><h1>Dashboard de Planeacion Docente NEM</h1></header>
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('planeacion',this)">Planeacion</button>
+  <button class="tab-btn" onclick="showTab('seguimiento',this)">Seguimiento</button>
+  <button class="tab-btn" onclick="showTab('recursos',this)">Recursos</button>
+</div>
+<div id="tab-planeacion" class="tab-content active">
+  <div class="card">
+    <h2>Datos generales</h2>
+    <div class="grid-2">
+      <div class="field"><label>Grado y grupo</label><p>{{GRADO_GRUPO}}</p></div>
+      <div class="field"><label>Campo formativo</label><p>{{CAMPO_FORMATIVO}}</p></div>
+      <div class="field"><label>Eje articulador</label><p>{{EJE_ARTICULADOR}}</p></div>
+      <div class="field"><label>Duracion</label><p>{{DURACION}}</p></div>
+      <div class="field"><label>Fecha</label><p>{{FECHA}}</p></div>
+      <div class="field"><label>Docente</label><p>{{NOMBRE_DOCENTE}}</p></div>
+    </div>
+  </div>
+  <div class="card">
+    <h2>PDA y Proposito</h2>
+    <div class="field"><label>PDA</label><p>{{PDA}}</p></div>
+    <div class="field" style="margin-top:10px;"><label>Proposito de la sesion</label><p>{{PROPOSITO}}</p></div>
+  </div>
+  <div class="card">
+    <h2>Momentos didacticos</h2>
+    <div class="momento"><h3>Apertura ({{TIEMPO_APERTURA}})</h3><p>{{CONTENIDO_APERTURA}}</p></div>
+    <div class="momento desarrollo"><h3>Desarrollo ({{TIEMPO_DESARROLLO}})</h3><p>{{CONTENIDO_DESARROLLO}}</p></div>
+    <div class="momento cierre"><h3>Cierre ({{TIEMPO_CIERRE}})</h3><p>{{CONTENIDO_CIERRE}}</p></div>
+  </div>
+  <div class="card">
+    <h2>Evaluacion formativa</h2>
+    <div class="grid-2">
+      <div class="field"><label>Instrumento</label><p>{{INSTRUMENTO_EVALUACION}}</p></div>
+      <div class="field"><label>Evidencia</label><p>{{EVIDENCIA}}</p></div>
+    </div>
+  </div>
+</div>
+<div id="tab-seguimiento" class="tab-content">
+  <div class="card">
+    <h2>Seguimiento grupal</h2>
+    <table>
+      <thead><tr><th>#</th><th>Estudiante</th><th>Participacion</th><th>Evidencia</th><th>Nivel de logro</th><th>Observaciones</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>{{ALUMNO_1}}</td><td></td><td></td><td><span class="badge proceso">En proceso</span></td><td></td></tr>
+        <tr><td>2</td><td>{{ALUMNO_2}}</td><td></td><td></td><td><span class="badge proceso">En proceso</span></td><td></td></tr>
+        <tr><td>3</td><td>{{ALUMNO_3}}</td><td></td><td></td><td><span class="badge proceso">En proceso</span></td><td></td></tr>
+        <tr><td>4</td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td>5</td><td></td><td></td><td></td><td></td><td></td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:10px;font-size:0.8rem;">Niveles: <span class="badge logrado">Logrado</span> <span class="badge proceso">En proceso</span> <span class="badge inicio">Inicio</span></p>
+  </div>
+  <div class="card">
+    <h2>Notas de la sesion</h2>
+    <div class="field"><label>Ajustes realizados</label><p>{{AJUSTES_SESION}}</p></div>
+    <div class="field" style="margin-top:10px;"><label>Para la proxima sesion</label><p>{{PROXIMA_SESION}}</p></div>
+  </div>
+</div>
+<div id="tab-recursos" class="tab-content">
+  <div class="card">
+    <h2>Materiales y recursos</h2>
+    <ul class="recurso-lista">
+      <li><span class="tag">Libro de texto</span> {{RECURSO_1}}</li>
+      <li><span class="tag">Material</span> {{RECURSO_2}}</li>
+      <li><span class="tag">Digital</span> {{RECURSO_3}}</li>
+      <li><span class="tag">Comunitario</span> {{RECURSO_4}}</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>Referencias NEM</h2>
+    <ul class="recurso-lista">
+      <li><span class="tag">SEP</span> Plan de Estudios 2022</li>
+      <li><span class="tag">SEP</span> Programa Sintetico de la Fase correspondiente</li>
+      <li><span class="tag">DOF</span> Acuerdo 14/08/22</li>
+    </ul>
+  </div>
+</div>
+<footer>Skill planeacion-docente-nem | OscarReyes_UACh | Dr. Oscar Ivan Reyes Maya, UACh</footer>
+<script>
+function showTab(id,btn){
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
