@@ -1,0 +1,5 @@
+La skill (planeacion-nem-educacion-basica.skill) — instálala con el botón de guardar en el archivo. Incluye:
+
+SKILL.md: el flujo completo (recopilar datos → redactar contenido → llenar el dashboard → cerrar invitando a personalizar) y los principios que siempre respeta (nunca inventa características del grupo, advierte sobre evaluación sumativa, marca todo como borrador).
+references/marco_nem.md: marco conceptual NEM (campos formativos, ejes articuladores, PDA, momentos didácticos) para que el contenido que redacte suene a NEM real, no genérico.
+assets/dashboard_template.html: la plantilla del dashboard con las tres pestañas, que la skill clona y llena con DATA en cada uso.
